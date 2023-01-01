@@ -1,0 +1,7 @@
+<div class="inputs">
+        <input type="text" (change)="getWeatherForecast($event)" />
+        <select name="zipcode" [(ngModel)]="searchedBy">
+            <option value="zip code" selected>Zip Code</option>
+            <option value="city name">City Name</option>
+        </select>
+</div>

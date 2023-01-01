@@ -1,0 +1,18 @@
+.inputs {
+    display :flex;
+    justify-content: space-around;
+    margin : 20px;
+    min-height: 40px;
+}
+.inputs input[type="text"] {
+    min-width: 80%;
+    text-align: center;
+}
+
+.inputs select {
+    min-width: 15%;
+}
+
+.inputs select option {
+    text-align: center;
+}
