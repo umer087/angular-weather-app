@@ -14,10 +14,10 @@ import { UnitsMeasurement } from '../../models/related.enum';
 
 export class OpenWeatherApiService {
 
-  private currentWeatherApiUrl = 'https://api.openweathermap.org/data/2.5/onecall?';
-  constructor(private http: HttpClient) { }
+  private currentWeatherApiUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
+  constructor( private http: HttpClient) { }
 
-  getCurrentAndForecastWeather(lat: number, lon: number, units: UnitsMeasurement = UnitsMeasurement.imperial)
+  getWeatherForecast(lat: number, lon: number, units: UnitsMeasurement = UnitsMeasurement.imperial)
     : Observable<OpenWeatherApiResponse> {
     return this.http.get<OpenWeatherApiResponse>(`${this.currentWeatherApiUrl}lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=${units}&appid=${environment.openWeatherApiKey}`);
   }
