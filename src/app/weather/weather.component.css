@@ -16,3 +16,31 @@
 .inputs select option {
     text-align: center;
 }
+
+/* weather forecast start */
+.weather-details {
+    margin: 2.5%;
+    padding-top: 2%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.forecast {
+    display: flex;
+    flex-direction: column;
+}
+.temperture {
+    display: flex;
+    flex-direction: column;
+}
+.today {
+    padding: 13px;
+    background-color: #422323;
+    border-radius: 10px;
+    color: white;
+}
+.details {
+    display: flex;
+}
+
+
+/* weather forecast end */

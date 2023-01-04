@@ -1,7 +1,50 @@
 <div class="inputs">
-        <input type="text" (change)="getWeatherForecast($event)" />
-        <select name="zipcode" [(ngModel)]="searchedBy">
-            <option value=" zip_code" selected>Zip Code</option>
-            <option value="city">City Name</option>
-        </select>
+    <input type="text" (change)="getWeatherForecast($event)" />
+    <select name="zipcode" [(ngModel)]="searchedBy">
+        <option value=" zip_code" selected>Zip Code</option>
+        <option value="city">City Name</option>
+    </select>
 </div>
+
+<div class="weather-details" *ngIf="weatherApiData">
+    <div class="forecast">
+        <div class="today">
+            <h4> Today's Forecast for {{weatherApiData?.city?.name}},{{weatherApiData?.city?.country}} </h4>
+            <div class="details">
+                <div>
+                    <p>Temperature: {{weatherApiData?.list[0].main.temp}}</p>
+                    <p>Weather Condition: {{weatherApiData?.list[0].weather[0].description}}</p>
+                    <p>Highest Temperature: {{weatherApiData?.list[0].main.temp_max}}</p>
+                    <p>Lowest Temperature: {{weatherApiData?.list[0].main.temp_min}}</p>
+                </div>
+                <div>
+                    <img src="http://openweathermap.org/img/wn/{{weatherApiData?.list[0].weather[0].icon}}@2x.png" alt="">
+                </div>
+
+            </div>
+        </div>
+        <div class="weekly">
+            <h4>Weekly Forecast For {{weatherApiData?.city?.name}},{{weatherApiData?.city?.country}}</h4>
+            <div class="flex">
+                <div class="card" *ngFor="let weeklyData of weeklyWeatherData">
+                    <img src="http://openweathermap.org/img/wn/{{weeklyData.weather[0].icon}}@2x.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="temperture">
+        <div class="converter">
+
+        </div>
+        <div class="chart">
+
+        </div>
+    </div>
+</div>
+
+<aside  *ngIf="showChart">
+    <app-bar-chart 
+        [barChartLabels]="barChartLabels"
+        [barChartData] = "barChartData">
+    </app-bar-chart>
+</aside>
