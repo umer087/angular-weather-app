@@ -32,19 +32,23 @@
             </div>
         </div>
     </div>
-    <div class="temperture">
-        <div class="converter">
-
+    <div class="right-card">
+        <div class="temperture">
+            <h2>Temperature Converter</h2>
+            <div class="flex converter">
+                <button>&#8451;</button>
+                <img src="assets/images/converter.jpg" alt="">
+                <button>&#8457;</button>
+            </div>
         </div>
         <div class="chart">
-
+            <aside  *ngIf="showChart">
+                <app-bar-chart 
+                    [barChartLabels]="barChartLabels"
+                    [barChartData] = "barChartData">
+                </app-bar-chart>
+            </aside>
         </div>
     </div>
 </div>
 
-<aside  *ngIf="showChart">
-    <app-bar-chart 
-        [barChartLabels]="barChartLabels"
-        [barChartData] = "barChartData">
-    </app-bar-chart>
-</aside>
