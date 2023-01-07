@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { WeatherComponent } from './weather/weather.component';
 import { HeaderComponent } from './header/header.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     WeatherComponent,
     HeaderComponent,
-    BarChartComponent
+    BarChartComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,23 @@
 <div class="inputs">
-    <input type="text" (change)="getWeatherForecast($event)" />
+    <!-- <input type="text" (change)="getWeatherForecast($event)" /> -->
+    <div class="dropdown">
+        <div id="myDropdown" class="dropdown-content" appClickOutside 
+        (clickOutSide)="closeCitiesDropDown($event)">
+            <input
+             (click)="showcities()"
+             (keyup)="filterCities()"
+             [(ngModel)] = "inputCity"
+              type="text" placeholder="Search.." >
+            <div *ngIf="showCities">
+                <a *ngFor="let city of  citiesDataFiltered" (click)="selectCity(city)">
+                    {{city.city}}
+                </a>
+                
+            </div>
+        </div>
+      </div>
     <select name="zipcode" [(ngModel)]="searchedBy">
-        <option value=" zip_code" selected>Zip Code</option>
+        <option value=" zip_code">Zip Code</option>
         <option value="city">City Name</option>
     </select>
 </div>

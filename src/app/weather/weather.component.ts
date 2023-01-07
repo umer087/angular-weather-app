@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { city } from 'src/models';
 import { searchOptions } from 'src/models/related.enum';
@@ -13,13 +13,17 @@ import {  AppSettings, OpenWeatherApiService } from '../../services';
 })
 export class WeatherComponent {
   constructor(
-      private openWeatherService  :OpenWeatherApiService
-  ) { }
+      private openWeatherService  :OpenWeatherApiService,
+  ) {}
+
   public citiesData : city[] = AppSettings.citiesData;
-  public searchedBy : string = searchOptions.zip_code;
+  public citiesDataFiltered : city[] = AppSettings.citiesData.slice(0, 10);
+  public searchedBy : string = "zip_code";
   public mockBarChartData : any = [];
   public weeklyWeatherData : any = [];
   public weatherApiData : any;
+  public inputCity : string = "";
+  public showCities : boolean = false;
   public destroy$   : Subject<boolean> = new Subject<boolean>();
 
   // bar chart start
@@ -106,6 +110,33 @@ export class WeatherComponent {
     const h = addZero(date.getHours());
     const m = addZero(date.getMinutes());
     return h + ":" + m ;
+  }
+
+  closeCitiesDropDown(event : any){
+    this.inputCity = "";
+    this.hideCities();
+  }
+
+  selectCity(city : any){
+    this.inputCity = city.city;
+    this.hideCities();
+  }
+
+  filterCities() {
+    console.log("this.citiesDataFiltered",this.citiesDataFiltered);
+    
+    this.citiesDataFiltered = this.citiesData.filter((city)=> 
+      city.city.toLowerCase().includes(this.inputCity.toLowerCase())
+    );
+    this.citiesDataFiltered =  this.citiesDataFiltered.slice(0, 10);
+  }
+
+  showcities() {
+    this.showCities = true;
+  }
+
+  hideCities() {
+    this.showCities = false;
   }
 
 }
