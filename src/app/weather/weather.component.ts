@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { city } from 'src/models';
-import { searchOptions } from 'src/models/related.enum';
-import { OpenWeatherApiResponse } from 'src/services/open-weather-api/openweather-api.model';
-import {  AppSettings, OpenWeatherApiService } from '../../services';
+import { city, UnitsMeasurement, UnitsMeasurementSymbols } from '../models';
+import { searchOptions } from '../models/related.enum';
+import { OpenWeatherApiResponse } from '../services/open-weather-api/openweather-api.model';
+import {  AppSettings, OpenWeatherApiService, CitiesApiService } from '../services';
 
 
 @Component({
@@ -13,16 +13,21 @@ import {  AppSettings, OpenWeatherApiService } from '../../services';
 })
 export class WeatherComponent {
   constructor(
-      private openWeatherService  :OpenWeatherApiService,
+      private openWeatherService  : OpenWeatherApiService,
+      private citiesService       : CitiesApiService
   ) {}
 
-  public citiesData : city[] = AppSettings.citiesData;
-  public citiesDataFiltered : city[] = AppSettings.citiesData.slice(0, 10);
+  public citiesData : city[] = [];
+  public citiesDataFiltered : city[] = [];
+  public selectedCity : any = null;
+  public unitsMeasurement = UnitsMeasurement;
+  public unitsMeasurementSymbols : any = UnitsMeasurementSymbols;
   public searchedBy : string = "zip_code";
   public mockBarChartData : any = [];
   public weeklyWeatherData : any = [];
+  public temperatureUnit : string = UnitsMeasurement.imperial;
   public weatherApiData : any;
-  public inputCity : string = "";
+  public inputCity : any = null;
   public showCities : boolean = false;
   public destroy$   : Subject<boolean> = new Subject<boolean>();
 
@@ -33,16 +38,25 @@ export class WeatherComponent {
     {data: [], label: 'Temperature'},
   ];
 
+  ngOnInit(){
+    this.citiesService.getCities()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response : any)=>{
+    this.citiesData = response;
+    this.citiesDataFiltered = this.citiesData.slice(0, 10);
+    
+  });
+
+  }
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
 
-  getWeatherForecast(event : Event){
-    const serarchQuery = (event.target as HTMLInputElement).value;
-    const selectedCity = this.citiesData.find((city : city)=> city.city.includes(serarchQuery) );
-    
-    selectedCity && this.openWeatherService.getWeatherForecast(selectedCity.latitude,selectedCity.longitude)
+  getWeatherForecast(selectedCity : any, unit = UnitsMeasurement.imperial){
+    this.temperatureUnit = unit;
+    this.selectedCity = selectedCity;
+    selectedCity && this.openWeatherService.getWeatherForecast(selectedCity.latitude,selectedCity.longitude, unit)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response : OpenWeatherApiResponse)=>{
         this.weatherApiData = response;
@@ -62,6 +76,8 @@ export class WeatherComponent {
     let previousDate : undefined | string;
     this.barChartLabels = [];
     this.barChartData[0].data = [];
+    console.log("weatherData",weatherData);
+    
     weatherData.some((weatherItem : any)=> {
       const itemDate = this.getReleventTimeZoneDate(weatherItem.dt,timezone);
       if(previousDate && previousDate !== itemDate.toDateString())
@@ -73,7 +89,6 @@ export class WeatherComponent {
     });
     this.showChart = true;
   }
-  
 
   showBarChart(seconds : number,timezone :number){
     const itemDate = this.getReleventTimeZoneDate(seconds,timezone);
@@ -95,14 +110,16 @@ export class WeatherComponent {
         if(previousDate)
           currentDayIndex++;
         previousDate = itemDate.toDateString();
+        weatherItem.weatherData = [];
+        weatherItem.weatherData.push(weatherItem); 
         this.weeklyWeatherData[currentDayIndex] = weatherItem;
         return;
       }
       previousDate = itemDate.toDateString();
+      this.weeklyWeatherData[currentDayIndex].weatherData.push(weatherItem);
       if(this.getTimeOnly(itemDate) == "12:00")
-        this.weeklyWeatherData[currentDayIndex] = weatherItem;      
-    });
-    
+        this.weeklyWeatherData[currentDayIndex] = {weatherItem,...this.weeklyWeatherData[currentDayIndex]};   
+    });    
   }
 
   getTimeOnly(date : Date) : string {
@@ -120,6 +137,7 @@ export class WeatherComponent {
   selectCity(city : any){
     this.inputCity = city.city;
     this.hideCities();
+    this.getWeatherForecast(city);
   }
 
   filterCities() {

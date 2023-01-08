@@ -1,5 +1,4 @@
-import { city } from "src/models";
-
+import { city } from "../models";
 export class AppSettings {
     public static citiesData  : city[] = [
       {
