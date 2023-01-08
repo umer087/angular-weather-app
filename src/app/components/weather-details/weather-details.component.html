@@ -1,16 +1,19 @@
+<ng-template #celsius>
+    &#8451;
+</ng-template>
 <div class="weather-details" *ngIf="weatherApiData">
     <div class="forecast">
         <div class="today">
             <h4> Today's Forecast for {{weatherApiData?.city?.name}},{{weatherApiData?.city?.country}} </h4>
             <div class="details">
                 <div>
-                    <p>Temperature: {{weatherApiData?.list[0].main.temp}}</p>
-                    <p>Weather Condition: {{weatherApiData?.list[0].weather[0].description}}</p>
-                    <p>Highest Temperature: {{weatherApiData?.list[0].main.temp_max}}</p>
-                    <p>Lowest Temperature: {{weatherApiData?.list[0].main.temp_min}}</p>
+                    <p>Temperature: {{weatherApiData.list[0].main.temp}} <span *ngIf="temperatureUnit == unitsMeasurement.imperial; else celsius">&#8457;</span></p>
+                    <p>Weather Condition: {{weatherApiData.list[0].weather[0].description}}</p>
+                    <p>Highest Temperature: {{weatherApiData.list[0].main.temp_max}}<span *ngIf="temperatureUnit == unitsMeasurement.imperial; else celsius">&#8457;</span></p>
+                    <p>Lowest Temperature: {{weatherApiData.list[0].main.temp_min}}<span *ngIf="temperatureUnit == unitsMeasurement.imperial; else celsius">&#8457;</span></p>
                 </div>
                 <div>
-                    <img src="http://openweathermap.org/img/wn/{{weatherApiData?.list[0].weather[0].icon}}@2x.png" alt="">
+                    <img src="http://openweathermap.org/img/wn/{{weatherApiData.list[0].weather[0].icon}}@2x.png" alt="">
                 </div>
 
             </div>
@@ -20,6 +23,8 @@
             <div class="flex">
                 <div class="card" *ngFor="let weeklyData of weeklyWeatherData" (click)="parseBarChartData(weeklyData.weatherData,weatherApiData.city.timezone)">
                     <img src="http://openweathermap.org/img/wn/{{weeklyData.weather[0].icon}}@2x.png" alt="">
+                    <p>{{weeklyData.weather[0].description}}</p>
+                    <p>{{weeklyData.main.temp}}<span *ngIf="temperatureUnit == unitsMeasurement.imperial; else celsius">&#8457;</span></p>
                 </div>
             </div>
         </div>
@@ -28,9 +33,9 @@
         <div class="temperture">
             <h2>Temperature Converter</h2>
             <div class="flex converter">
-                <button (click)="getWeatherForecast(selectedCity,  unitsMeasurement.metric)" >&#8451;</button>
+                <button (click)="selectedCity && getWeatherForecast(selectedCity,  unitsMeasurement.metric)" >&#8451;elsuis</button>
                 <img src="assets/images/converter.jpg" alt="">
-                <button (click)="getWeatherForecast(selectedCity,  unitsMeasurement.imperial)">&#8457;</button>
+                <button (click)="selectedCity && getWeatherForecast(selectedCity,  unitsMeasurement.imperial)">&#8457;arhenheit</button>
             </div>
         </div>
         <div class="chart">
@@ -43,10 +48,8 @@
         </div>
     </div>
     
-    <div class="">
-        <img src="https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
-        <img src="https://tile.openweathermap.org/map/clouds_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
-        <img src="https://tile.openweathermap.org/map/temp_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
-    </div>
-
+    
+</div>
+<div *ngIf="weatherApiData">
+    <app-maps></app-maps>
 </div>

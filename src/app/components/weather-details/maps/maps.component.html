@@ -1,0 +1,21 @@
+<div class="map-wraper">
+    <div class="flex converter">
+        <button (click)="currentMap = 'clouds_new'"> Clouds
+        </button>
+        <button (click)="currentMap = 'precipitation_new'">
+            Precipitation
+        </button>
+        <button (click)="currentMap = 'temp_new'">
+            Temperature
+        </button>
+    </div>
+    <div>
+        <img src="https://tile.openweathermap.org/map/{{currentMap}}/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
+    </div>
+    <!-- <div>
+        <img src="https://tile.openweathermap.org/map/clouds_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
+    </div>
+    <div>
+        <img src="https://tile.openweathermap.org/map/temp_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
+    </div> -->
+</div>

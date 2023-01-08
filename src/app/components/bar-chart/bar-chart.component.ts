@@ -15,6 +15,6 @@ export class BarChartComponent {
   ];
   public barChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: false
+    responsive: true
   };
 }

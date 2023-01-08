@@ -12,6 +12,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { WeatherDetailsComponent } from './components/weather-details/weather-details.component';
+import { MapsComponent } from './components/weather-details/maps/maps.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { WeatherDetailsComponent } from './components/weather-details/weather-de
     HeaderComponent,
     BarChartComponent,
     ClickOutsideDirective,
-    WeatherDetailsComponent
+    WeatherDetailsComponent,
+    MapsComponent
   ],
   imports: [
     BrowserModule,
