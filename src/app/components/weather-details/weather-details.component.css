@@ -61,3 +61,7 @@
     margin-top: 15%;
     padding-top : 10%;
 }
+.card p {
+    white-space: nowrap;
+    overflow: hidden;
+}
