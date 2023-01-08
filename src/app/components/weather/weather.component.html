@@ -1,0 +1,87 @@
+<div class="inputs">
+    <!-- <input type="text" (change)="getWeatherForecast($event)" /> -->
+    <div class="dropdown">
+        <div id="myDropdown" class="dropdown-content" appClickOutside 
+        (clickOutSide)="closeCitiesDropDown($event)">
+            <input
+             (click)="showcities()"
+             (keyup)="filterCities()"
+             [(ngModel)] = "inputCity"
+              type="text" placeholder="Search.." >
+            <div *ngIf="showCities">
+                <a *ngFor="let city of  citiesDataFiltered" (click)="selectCity(city)">
+                    {{city.city}} ({{city.zip_code}})
+                </a>
+                
+            </div>
+        </div>
+      </div>
+    <select name="zipcode" [(ngModel)]="searchedBy">
+        <option value=" zip_code">Zip Code</option>
+        <option value="city">City Name</option>
+    </select>
+</div>
+
+    <app-weather-details
+        [selectedCity]="selectedCity"
+        [weeklyWeatherData] = "weeklyWeatherData"
+        [barChartData] = "barChartData"
+        [barChartLabels] = "barChartLabels"
+        [weatherApiData] = "weatherApiData"
+        [showChart] = "showChart"
+        [getWeatherForecast] = "getWeatherForecast"
+        [parseBarChartData] = "parseBarChartData"
+    ></app-weather-details>
+<!-- <div class="weather-details" *ngIf="weatherApiData">
+    <div class="forecast">
+        <div class="today">
+            <h4> Today's Forecast for {{weatherApiData?.city?.name}},{{weatherApiData?.city?.country}} </h4>
+            <div class="details">
+                <div>
+                    <p>Temperature: {{weatherApiData?.list[0].main.temp}}</p>
+                    <p>Weather Condition: {{weatherApiData?.list[0].weather[0].description}}</p>
+                    <p>Highest Temperature: {{weatherApiData?.list[0].main.temp_max}}</p>
+                    <p>Lowest Temperature: {{weatherApiData?.list[0].main.temp_min}}</p>
+                </div>
+                <div>
+                    <img src="http://openweathermap.org/img/wn/{{weatherApiData?.list[0].weather[0].icon}}@2x.png" alt="">
+                </div>
+
+            </div>
+        </div>
+        <div class="weekly">
+            <h4>Weekly Forecast For {{weatherApiData?.city?.name}},{{weatherApiData?.city?.country}}</h4>
+            <div class="flex">
+                <div class="card" *ngFor="let weeklyData of weeklyWeatherData" (click)="parseBarChartData(weeklyData.weatherData,weatherApiData.city.timezone)">
+                    <img src="http://openweathermap.org/img/wn/{{weeklyData.weather[0].icon}}@2x.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-card">
+        <div class="temperture">
+            <h2>Temperature Converter</h2>
+            <div class="flex converter">
+                <button (click)="getWeatherForecast(selectedCity,  unitsMeasurement.metric)" >&#8451;</button>
+                <img src="assets/images/converter.jpg" alt="">
+                <button (click)="getWeatherForecast(selectedCity,  unitsMeasurement.imperial)">&#8457;</button>
+            </div>
+        </div>
+        <div class="chart">
+            <aside  *ngIf="showChart">
+                <app-bar-chart 
+                    [barChartLabels]="barChartLabels"
+                    [barChartData] = "barChartData">
+                </app-bar-chart>
+            </aside>
+        </div>
+    </div>
+    
+    <div class="">
+        <img src="https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
+        <img src="https://tile.openweathermap.org/map/clouds_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
+        <img src="https://tile.openweathermap.org/map/temp_new/0/0/0.png?appid=af6add7d217ef086da466aeddf334d9c&lat=18.165273&lon=-66.722583" alt="">
+    </div>
+
+</div> -->
+

@@ -1,0 +1,56 @@
+.weather-details {
+    margin: 2.5%;
+    padding-top: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.forecast {
+    display: flex;
+    flex-direction: column;
+}
+.temperture {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 20px;
+}
+.today {
+    padding: 13px;
+    background-color: #422323;
+    border-radius: 10px;
+    color: white;
+}
+.details {
+    display: flex;
+}
+.weekly .flex {
+    max-width: 340px;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.card {
+    border: 1px solid gray;
+    margin: 5px;
+}
+
+.details img {
+    margin-top : -20px;
+}
+.converter img {
+    width:80px;
+}
+.converter {
+    justify-content :center;
+}
+
+.converter button {
+    border: 2px solid orange;
+    box-shadow: 1px 2px 2px #ccc;
+    min-width: 150px;
+}
+.righ-card .chart {
+    border: 1px solid gray;
+    padding: 20px;
+}

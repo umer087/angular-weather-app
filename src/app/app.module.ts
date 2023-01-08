@@ -7,10 +7,11 @@ import { NgChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WeatherComponent } from './weather/weather.component';
-import { HeaderComponent } from './header/header.component';
-import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { WeatherComponent } from './components/weather/weather.component';
+import { HeaderComponent } from './components/header/header.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { WeatherDetailsComponent } from './components/weather-details/weather-details.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     WeatherComponent,
     HeaderComponent,
     BarChartComponent,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    WeatherDetailsComponent
   ],
   imports: [
     BrowserModule,
